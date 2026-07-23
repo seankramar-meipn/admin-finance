@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Personal Financial Statements</title>
+  <style>
+    body { font-family: Helvetica, sans-serif; margin: 2rem; background-color: #f9f9f9; color: #333; }
+    h1, h2 { text-align: center; }
+    #subtitle { text-align: center; font-size: 18px; margin-top: -10px; margin-bottom: 30px; }
+    #nameInput { font-size: 1rem; padding: 0.2rem 0.5rem; width: 200px; text-align: center; }
+    .section { background: #fff; border: 2px solid #000; border-radius: 10px; padding: 1.5rem; margin-bottom: 2rem; }
+    .description { font-style: italic; color: #555; text-align: center; margin-bottom: 1rem; }
+    h3 { text-align: left; margin-top: 1.5rem; }
+    .item-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
+    .item-row input[type="text"] { flex: 1; padding: 0.4rem; }
+    .item-row input[type="number"] { width: 150px; padding: 0.4rem; text-align: right; }
+    .item-row button { background: none; border: none; color: red; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
+    .totals, .total-line { font-weight: bold; margin-top: 1rem; border-top: 2px solid #000; padding-top: 0.5rem; display: flex; justify-content: space-between; }
+    .calc-line { font-style: italic; text-align: right; color: #555; }
+    .add-button { margin-top: 0.5rem; background: #007bff; color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 5px; cursor: pointer; }
+    .pdf-button { text-align: center; margin-top: 2rem; }
+    .pdf-button button { background: #28a745; color: white; border: none; padding: 0.75rem 1.25rem; font-size: 1rem; border-radius: 6px; cursor: pointer; }
+    .pdf-button small { display: block; margin-top: 0.5rem; font-style: italic; color: #666; }
+    .page-break { page-break-before: always; }
+    .ratio { margin-top: 1rem; }
+    .ratio strong { display: inline-block; width: 180px; }
+    .ratio em { display: block; font-style: italic; margin-left: 180px; color: #444; }
+    input[type="date"] { padding: 0.3rem; font-size: 1rem; }
+    @media print {
+  .add-button,
+  .pdf-button,
+  .date-row,
+  .no-print {  /* ✅ added this line */
+    display: none !important;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  input[type="text"],
+  input[type="number"] {
+    border: none;
+    background: none;
+    padding: 0;
+  }
+
+  .item-row button {
+    display: none;
+  }
+
+  #nameInput {
+    border: none;
+    background: none;
+  }
+}
+
+  </style>
+</head>
+<div style="text-align: center; margin-bottom: 1rem;">
+  <img
+    src="uni-logo-17805.jpg"
+    alt="Santa Ana College Logo"
+    style="max-width: 250px; height: auto;"
+  />
+</div>
+
+<h1>BUS130: Personal Financial Statements</h1>
+<div id="subtitle">for <input id="nameInput" placeholder="Enter your name" oninput="updateName()" /></div>
+<div class="section">
+  <h2>Balance Sheet</h2>
+  <div class="description">A snapshot of your net worth at a specific point in time.</div>
+  <div class="date-row"><strong>As of:</strong> <input type="date" id="balanceDate" /></div>
+  <h3>Assets</h3>
+  <h4>Current Assets</h4>
+  <div id="currentAssets"></div>
+  <button class="add-button" onclick="addItem('currentAssets')">Add Current Asset</button>
+  <h4>Long-Term Assets</h4>
+  <div id="longTermAssets"></div>
+  <button class="add-button" onclick="addItem('longTermAssets')">Add Long-Term Asset</button>
+  <div class="total-line">Total Assets: <span id="totalAssets">$0.00</span></div>
+
+  <h3>Liabilities</h3>
+  <h4>Current Liabilities</h4>
+  <div id="currentLiabilities"></div>
+  <button class="add-button" onclick="addItem('currentLiabilities')">Add Current Liability</button>
+  <h4>Long-Term Liabilities</h4>
+  <div id="longTermLiabilities"></div>
+  <button class="add-button" onclick="addItem('longTermLiabilities')">Add Long-Term Liability</button>
+  <div class="total-line">Total Liabilities: <span id="totalLiabilities">$0.00</span></div>
+
+  <div class="totals">Net Worth: <span id="netWorth">$0.00</span></div>
+  <div class="calc-line" id="netWorthCalc">($0 – $0 = $0)</div>
+</div>
+
+<div class="section page-break">
+  <h2>Cash Flow Statement</h2>
+  <div class="description">Shows your income and spending over time to help you assess financial health.</div>
+  <div class="date-row"><strong>For the period:</strong> <input type="date" id="startDate" /> to <input type="date" id="endDate" /></div>
+
+  <h3>Cash Inflows</h3>
+  <div id="inflows"></div>
+  <button class="add-button" onclick="addItem('inflows')">Add Income Source</button>
+  <div class="total-line">Total Inflows: <span id="totalInflows">$0.00</span></div>
+
+  <h3>Savings</h3>
+  <div id="savingsOutflows"></div>
+  <button class="add-button" onclick="addItem('savingsOutflows')">Add Savings Contribution</button>
+
+  <h3>Fixed Expenses</h3>
+  <div id="fixedOutflows"></div>
+  <button class="add-button" onclick="addItem('fixedOutflows')">Add Fixed Expense</button>
+
+  <h3>Variable Expenses</h3>
+  <div id="variableOutflows"></div>
+  <button class="add-button" onclick="addItem('variableOutflows')">Add Variable Expense</button>
+  <div class="total-line">Total Outflows: <span id="totalOutflows">$0.00</span></div>
+
+  <div class="totals">Net Cash Flow: <span id="netCashFlow">$0.00</span></div>
+  <div class="calc-line" id="netCashCalc">($0 – $0 = $0)</div>
+</div>
+
+<div class="section page-break">
+  <h2>Financial Ratios</h2>
+  <div class="ratio"><strong>Debt Ratio:</strong> <span id="debtRatio">—</span><em id="debtRatioText"></em></div>
+  <div class="ratio"><strong>Current Ratio:</strong> <span id="currentRatio">—</span><em id="currentRatioText"></em></div>
+  <div class="ratio"><strong>Liquidity Ratio:</strong> <span id="liquidityRatio">—</span><em id="liquidityRatioText"></em></div>
+  <div class="ratio"><strong>Savings Ratio:</strong> <span id="savingsRatio">—</span><em id="savingsRatioText"></em></div>
+</div>
+
+<script>
+function formatMoney(value) {
+  return '$' + Number(value || 0).toLocaleString(undefined, {minimumFractionDigits: 2});
+}
+function addItem(sectionId) {
+  const section = document.getElementById(sectionId);
+  const row = document.createElement("div");
+  row.className = "item-row";
+  row.innerHTML = '<input type="text" placeholder="Description" /><input type="number" placeholder="0" oninput="calculate()" /><button onclick="this.parentElement.remove(); calculate()">✕</button>';
+  section.appendChild(row);
+}
+function sum(sectionId) {
+  return [...document.getElementById(sectionId).querySelectorAll("input[type='number']")]
+    .reduce((sum, input) => sum + parseFloat(input.value || 0), 0);
+}
+function updateName() {
+  const name = document.getElementById('nameInput').value.trim();
+  document.title = name ? `Personal Financial Statements for ${name}` : 'Personal Financial Statements';
+}
+function calculate() {
+  const inflows = sum('inflows');
+  const savings = sum('savingsOutflows');
+  const fixed = sum('fixedOutflows');
+  const variable = sum('variableOutflows');
+  const totalOutflows = savings + fixed + variable;
+  const netCash = inflows - totalOutflows;
+
+  const currentAssets = sum('currentAssets');
+  const longTermAssets = sum('longTermAssets');
+  const currentLiabilities = sum('currentLiabilities');
+  const longTermLiabilities = sum('longTermLiabilities');
+
+  const totalAssets = currentAssets + longTermAssets;
+  const totalLiabilities = currentLiabilities + longTermLiabilities;
+  const netWorth = totalAssets - totalLiabilities;
+
+  const liquidity = totalOutflows > 0 ? (currentAssets / totalOutflows) : 0;
+  const debtRatio = totalAssets > 0 ? (totalLiabilities / totalAssets) * 100 : 0;
+  const currentRatio = currentLiabilities > 0 ? currentAssets / currentLiabilities : 0;
+  const savingsRatio = inflows > 0 ? (savings / inflows) * 100 : 0;
+
+  document.getElementById('netCashFlow').textContent = formatMoney(netCash);
+  document.getElementById('netCashCalc').textContent = `(${formatMoney(inflows)} – ${formatMoney(totalOutflows)} = ${formatMoney(netCash)})`;
+  document.getElementById('netWorth').textContent = formatMoney(netWorth);
+  document.getElementById('netWorthCalc').textContent = `(${formatMoney(totalAssets)} – ${formatMoney(totalLiabilities)} = ${formatMoney(netWorth)})`;
+
+  document.getElementById('totalInflows').textContent = formatMoney(inflows);
+  document.getElementById('totalOutflows').textContent = formatMoney(totalOutflows);
+  document.getElementById('totalAssets').textContent = formatMoney(totalAssets);
+  document.getElementById('totalLiabilities').textContent = formatMoney(totalLiabilities);
+
+  document.getElementById('debtRatio').textContent = debtRatio.toFixed(1) + '%';
+  document.getElementById('currentRatio').textContent = currentRatio.toFixed(2);
+  document.getElementById('liquidityRatio').textContent = liquidity.toFixed(2);
+  document.getElementById('savingsRatio').textContent = savingsRatio.toFixed(1) + '%';
+
+  document.getElementById('debtRatioText').textContent = `About ${debtRatio.toFixed(1)}% of your assets are financed by debt.`;
+  document.getElementById('currentRatioText').textContent = `You have $${currentRatio.toFixed(2)} in current assets for every $1 of current liabilities.`;
+  document.getElementById('liquidityRatioText').textContent = `You can cover about ${liquidity.toFixed(1)} months of expenses with your current assets.`;
+  document.getElementById('savingsRatioText').textContent = `You're saving ${savingsRatio.toFixed(1)}% of your income.`;
+}
+document.addEventListener("input", calculate);
+window.onload = calculate;
+</script>
+
+<div class="pdf-button">
+  <button onclick="window.print()">Print / Download as PDF</button>
+  <small>Use your browser’s “Save as PDF” option when printing</small>
+</div>
+<div class="no-print" style="background:#fff3cd; border:1px solid #ffeeba; padding:1rem; border-radius:6px; margin-top:2rem;">
+  <strong>Privacy Disclaimer:</strong>
+  <p>
+    This tool runs entirely in your web browser. No data you enter is saved, stored, or shared in any way.
+    If you'd like to keep a copy of your information, please download or print your completed form before closing this page.
+  </p>
+</div>
+
+
+</body>
+</html>
