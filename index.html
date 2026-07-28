@@ -1,205 +1,322 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Building Financial Statements</title>
-  <style>
-    body { font-family: Helvetica, sans-serif; margin: 2rem; background-color: #f9f9f9; color: #333; }
-    h1, h2 { text-align: center; }
-    #subtitle { text-align: center; font-size: 18px; margin-top: -10px; margin-bottom: 30px; }
-    #nameInput { font-size: 1rem; padding: 0.2rem 0.5rem; width: 200px; text-align: center; }
-    .section { background: #fff; border: 2px solid #000; border-radius: 10px; padding: 1.5rem; margin-bottom: 2rem; }
-    .description { font-style: italic; color: #555; text-align: center; margin-bottom: 1rem; }
-    h3 { text-align: left; margin-top: 1.5rem; }
-    .item-row { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center; }
-    .item-row input[type="text"] { flex: 1; padding: 0.4rem; }
-    .item-row input[type="number"] { width: 150px; padding: 0.4rem; text-align: right; }
-    .item-row button { background: none; border: none; color: red; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
-    .totals, .total-line { font-weight: bold; margin-top: 1rem; border-top: 2px solid #000; padding-top: 0.5rem; display: flex; justify-content: space-between; }
-    .calc-line { font-style: italic; text-align: right; color: #555; }
-    .add-button { margin-top: 0.5rem; background: #007bff; color: white; border: none; padding: 0.4rem 0.75rem; border-radius: 5px; cursor: pointer; }
-    .pdf-button { text-align: center; margin-top: 2rem; }
-    .pdf-button button { background: #28a745; color: white; border: none; padding: 0.75rem 1.25rem; font-size: 1rem; border-radius: 6px; cursor: pointer; }
-    .pdf-button small { display: block; margin-top: 0.5rem; font-style: italic; color: #666; }
-    .page-break { page-break-before: always; }
-    .ratio { margin-top: 1rem; }
-    .ratio strong { display: inline-block; width: 180px; }
-    .ratio em { display: block; font-style: italic; margin-left: 180px; color: #444; }
-    input[type="date"] { padding: 0.3rem; font-size: 1rem; }
-    @media print {
-  .add-button,
-  .pdf-button,
-  .date-row,
-  .no-print {  /* ✅ added this line */
-    display: none !important;
-  }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>School Financial Statements</title>
 
-  .page-break {
-    page-break-before: always;
-  }
-
-  input[type="text"],
-  input[type="number"] {
-    border: none;
-    background: none;
-    padding: 0;
-  }
-
-  .item-row button {
-    display: none;
-  }
-
-  #nameInput {
-    border: none;
-    background: none;
-  }
+<style>
+body {
+  font-family: Helvetica, sans-serif;
+  margin: 2rem;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-  </style>
-</head>
-<div style="text-align: center; margin-bottom: 1rem;">
-  <img
-    src="meipn-logo-horizontal-full-color-dark-1500px.webp"
-    alt="MEIPN Logo"
-    style="max-width: 500px; height: auto;"
-  />
+h1, h2 {
+  text-align: center;
+}
+
+#subtitle {
+  text-align: center;
+  font-size: 18px;
+  margin-top: -10px;
+  margin-bottom: 30px;
+}
+
+#nameInput {
+  font-size: 1rem;
+  padding: 0.2rem 0.5rem;
+  width: 260px;
+  text-align: center;
+}
+
+.section {
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.description {
+  font-style: italic;
+  color: #555;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  margin-top: 1.5rem;
+}
+
+.item-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.item-row input[type="text"] {
+  flex: 1;
+  padding: 0.4rem;
+}
+
+.money-input {
+  width: 150px;
+  padding: 0.4rem;
+  text-align: right;
+}
+
+.item-row button {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.subtotal-line {
+  font-weight: bold;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  color: #444;
+}
+
+.total-line,
+.totals {
+  font-weight: bold;
+  margin-top: 1rem;
+  border-top: 2px solid #000;
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.calc-line {
+  font-style: italic;
+  text-align: right;
+  color: #555;
+}
+
+.add-button {
+  margin-top: 0.5rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.page-break {
+  page-break-before: always;
+}
+
+.ratio {
+  margin-top: 1rem;
+}
+
+.ratio strong {
+  display: inline-block;
+  width: 200px;
+}
+
+.ratio em {
+  display: block;
+  margin-left: 200px;
+  color: #444;
+}
+
+@media print {
+  <h3>Cash Outflows</h3>
+
+<h4>Salaries and Benefits</h4>
+<div id="salariesBenefitsOutflows"></div>
+<button class="add-button" onclick="addItem('salariesBenefitsOutflows')">
+Add Salary or Benefit Item
+</button>
+<div class="subtotal-line">
+Subtotal:
+<span id="salariesBenefitsOutflowsSubtotal">$0.00</span>
 </div>
 
-<h1>Building Financial Statements</h1>
-<div id="subtitle">for <input id="nameInput" placeholder="Enter your name" oninput="updateName()" /></div>
-<div class="section">
-  <h2>Balance Sheet</h2>
-  <div class="description">A snapshot of your net worth at a specific point in time.</div>
-  <div class="date-row"><strong>As of:</strong> <input type="date" id="balanceDate" /></div>
-  <h3>Assets</h3>
-  <h4>Current Assets</h4>
-  <div id="currentAssets"></div>
-  <button class="add-button" onclick="addItem('currentAssets')">Add Current Asset</button>
-  <h4>Long-Term Assets</h4>
-  <div id="longTermAssets"></div>
-  <button class="add-button" onclick="addItem('longTermAssets')">Add Long-Term Asset</button>
-  <div class="total-line">Total Assets: <span id="totalAssets">$0.00</span></div>
-
-  <h3>Liabilities</h3>
-  <h4>Current Liabilities</h4>
-  <div id="currentLiabilities"></div>
-  <button class="add-button" onclick="addItem('currentLiabilities')">Add Current Liability</button>
-  <h4>Long-Term Liabilities</h4>
-  <div id="longTermLiabilities"></div>
-  <button class="add-button" onclick="addItem('longTermLiabilities')">Add Long-Term Liability</button>
-  <div class="total-line">Total Liabilities: <span id="totalLiabilities">$0.00</span></div>
-
-  <div class="totals">Net Worth: <span id="netWorth">$0.00</span></div>
-  <div class="calc-line" id="netWorthCalc">($0 – $0 = $0)</div>
+<h4>Operational Expenses</h4>
+<div id="operationalExpensesOutflows"></div>
+<button class="add-button" onclick="addItem('operationalExpensesOutflows')">
+Add Operational Expense
+</button>
+<div class="subtotal-line">
+Subtotal:
+<span id="operationalExpensesOutflowsSubtotal">$0.00</span>
 </div>
 
-<div class="section page-break">
-  <h2>Cash Flow Statement</h2>
-  <div class="description">Shows your income and spending over time to help you assess financial health.</div>
-  <div class="date-row"><strong>For the period:</strong> <input type="date" id="startDate" /> to <input type="date" id="endDate" /></div>
-
-  <h3>Cash Inflows</h3>
-  <div id="inflows"></div>
-  <button class="add-button" onclick="addItem('inflows')">Add Income Source</button>
-  <div class="total-line">Total Inflows: <span id="totalInflows">$0.00</span></div>
-
-  <h3>Savings</h3>
-  <div id="savingsOutflows"></div>
-  <button class="add-button" onclick="addItem('savingsOutflows')">Add Savings Contribution</button>
-
-  <h3>Fixed Expenses</h3>
-  <div id="fixedOutflows"></div>
-  <button class="add-button" onclick="addItem('fixedOutflows')">Add Fixed Expense</button>
-
-  <h3>Variable Expenses</h3>
-  <div id="variableOutflows"></div>
-  <button class="add-button" onclick="addItem('variableOutflows')">Add Variable Expense</button>
-  <div class="total-line">Total Outflows: <span id="totalOutflows">$0.00</span></div>
-
-  <div class="totals">Net Cash Flow: <span id="netCashFlow">$0.00</span></div>
-  <div class="calc-line" id="netCashCalc">($0 – $0 = $0)</div>
+<h4>Programs and Activities</h4>
+<div id="programsActivitiesOutflows"></div>
+<button class="add-button" onclick="addItem('programsActivitiesOutflows')">
+Add Program Expense
+</button>
+<div class="subtotal-line">
+Subtotal:
+<span id="programsActivitiesOutflowsSubtotal">$0.00</span>
 </div>
 
-<div class="section page-break">
-  <h2>Financial Ratios</h2>
-  <div class="ratio"><strong>Debt Ratio:</strong> <span id="debtRatio">—</span><em id="debtRatioText"></em></div>
-  <div class="ratio"><strong>Current Ratio:</strong> <span id="currentRatio">—</span><em id="currentRatioText"></em></div>
-  <div class="ratio"><strong>Liquidity Ratio:</strong> <span id="liquidityRatio">—</span><em id="liquidityRatioText"></em></div>
-  <div class="ratio"><strong>Savings Ratio:</strong> <span id="savingsRatio">—</span><em id="savingsRatioText"></em></div>
+<h4>Facility and Capital Costs</h4>
+<div id="facilityCapitalOutflows"></div>
+<button class="add-button" onclick="addItem('facilityCapitalOutflows')">
+Add Facility or Capital Cost
+</button>
+<div class="subtotal-line">
+Subtotal:
+<span id="facilityCapitalOutflowsSubtotal">$0.00</span>
 </div>
 
-<script>
-function formatMoney(value) {
-  return '$' + Number(value || 0).toLocaleString(undefined, {minimumFractionDigits: 2});
-}
-function addItem(sectionId) {
-  const section = document.getElementById(sectionId);
-  const row = document.createElement("div");
-  row.className = "item-row";
-  row.innerHTML = '<input type="text" placeholder="Description" /><input type="number" placeholder="0" oninput="calculate()" /><button onclick="this.parentElement.remove(); calculate()">✕</button>';
-  section.appendChild(row);
-}
-function sum(sectionId) {
-  return [...document.getElementById(sectionId).querySelectorAll("input[type='number']")]
-    .reduce((sum, input) => sum + parseFloat(input.value || 0), 0);
-}
-function updateName() {
-  const name = document.getElementById('nameInput').value.trim();
-  document.title = name ? `Personal Financial Statements for ${name}` : 'Personal Financial Statements';
-}
-function calculate() {
-  const inflows = sum('inflows');
-  const savings = sum('savingsOutflows');
-  const fixed = sum('fixedOutflows');
-  const variable = sum('variableOutflows');
-  const totalOutflows = savings + fixed + variable;
-  const netCash = inflows - totalOutflows;
+<h4>Miscellaneous Expenses</h4>
+<div id="miscellaneousOutflows"></div>
+<button class="add-button" onclick="addItem('miscellaneousOutflows')">
+Add Miscellaneous Expense
+</button>
+<div class="subtotal-line">
+Subtotal:
+<span id="miscellaneousOutflowsSubtotal">$0.00</span>
+</div>
 
-  const currentAssets = sum('currentAssets');
-  const longTermAssets = sum('longTermAssets');
-  const currentLiabilities = sum('currentLiabilities');
-  const longTermLiabilities = sum('longTermLiabilities');
+<div class="total-line">
+Total Outflows:
+<span id="totalOutflows">$0.00</span>
+</div>
 
-  const totalAssets = currentAssets + longTermAssets;
-  const totalLiabilities = currentLiabilities + longTermLiabilities;
-  const netWorth = totalAssets - totalLiabilities;
+<div class="totals">
+Net Cash Flow:
+<span id="netCashFlow">$0.00</span>
+</div>
 
-  const liquidity = totalOutflows > 0 ? (currentAssets / totalOutflows) : 0;
-  const debtRatio = totalAssets > 0 ? (totalLiabilities / totalAssets) * 100 : 0;
-  const currentRatio = currentLiabilities > 0 ? currentAssets / currentLiabilities : 0;
-  const savingsRatio = inflows > 0 ? (savings / inflows) * 100 : 0;
+<div class="calc-line" id="netCashCalc">
+($0.00 – $0.00 = $0.00)
+</div>
 
-  document.getElementById('netCashFlow').textContent = formatMoney(netCash);
-  document.getElementById('netCashCalc').textContent = `(${formatMoney(inflows)} – ${formatMoney(totalOutflows)} = ${formatMoney(netCash)})`;
-  document.getElementById('netWorth').textContent = formatMoney(netWorth);
-  document.getElementById('netWorthCalc').textContent = `(${formatMoney(totalAssets)} – ${formatMoney(totalLiabilities)} = ${formatMoney(netWorth)})`;
+</div>
+  <div class="section page-break">
 
-  document.getElementById('totalInflows').textContent = formatMoney(inflows);
-  document.getElementById('totalOutflows').textContent = formatMoney(totalOutflows);
-  document.getElementById('totalAssets').textContent = formatMoney(totalAssets);
-  document.getElementById('totalLiabilities').textContent = formatMoney(totalLiabilities);
+<h2>Balance Sheet</h2>
 
-  document.getElementById('debtRatio').textContent = debtRatio.toFixed(1) + '%';
-  document.getElementById('currentRatio').textContent = currentRatio.toFixed(2);
-  document.getElementById('liquidityRatio').textContent = liquidity.toFixed(2);
-  document.getElementById('savingsRatio').textContent = savingsRatio.toFixed(1) + '%';
+<div class="description">
+A snapshot of the organization's assets, liabilities, and net assets at a specific point in time.
+</div>
 
-  document.getElementById('debtRatioText').textContent = `About ${debtRatio.toFixed(1)}% of your assets are financed by debt.`;
-  document.getElementById('currentRatioText').textContent = `You have $${currentRatio.toFixed(2)} in current assets for every $1 of current liabilities.`;
-  document.getElementById('liquidityRatioText').textContent = `You can cover about ${liquidity.toFixed(1)} months of expenses with your current assets.`;
-  document.getElementById('savingsRatioText').textContent = `You're saving ${savingsRatio.toFixed(1)}% of your income.`;
-}
-document.addEventListener("input", calculate);
-window.onload = calculate;
-</script>
+<div class="date-row">
+<strong>As of:</strong>
+<input type="date" id="balanceDate" />
+</div>
+
+<h3>Assets</h3>
+
+<h4>Cash and Cash Equivalents</h4>
+<div id="cashAssets"></div>
+<button class="add-button" onclick="addItem('cashAssets')">Add Cash Asset</button>
+
+<h4>Accounts Receivable</h4>
+<div id="receivablesAssets"></div>
+<button class="add-button" onclick="addItem('receivablesAssets')">Add Receivable</button>
+
+<h4>Prepaid Expenses and Deposits</h4>
+<div id="prepaidAssets"></div>
+<button class="add-button" onclick="addItem('prepaidAssets')">Add Prepaid Asset</button>
+
+<h4>Property and Equipment</h4>
+<div id="propertyEquipmentAssets"></div>
+<button class="add-button" onclick="addItem('propertyEquipmentAssets')">Add Property or Equipment</button>
+
+<h4>Other Assets</h4>
+<div id="otherAssets"></div>
+<button class="add-button" onclick="addItem('otherAssets')">Add Other Asset</button>
+
+<div class="total-line">
+Total Assets:
+<span id="totalAssets">$0.00</span>
+</div>
+
+<h3>Liabilities</h3>
+
+<h4>Accounts Payable</h4>
+<div id="accountsPayableLiabilities"></div>
+<button class="add-button" onclick="addItem('accountsPayableLiabilities')">Add Payable</button>
+
+<h4>Accrued Payroll and Benefits</h4>
+<div id="payrollBenefitsLiabilities"></div>
+<button class="add-button" onclick="addItem('payrollBenefitsLiabilities')">Add Payroll Liability</button>
+
+<h4>Deferred Tuition and Unearned Revenue</h4>
+<div id="deferredRevenueLiabilities"></div>
+<button class="add-button" onclick="addItem('deferredRevenueLiabilities')">Add Deferred Revenue</button>
+
+<h4>Loans and Long-Term Debt</h4>
+<div id="debtLiabilities"></div>
+<button class="add-button" onclick="addItem('debtLiabilities')">Add Debt</button>
+
+<h4>Other Liabilities</h4>
+<div id="otherLiabilities"></div>
+<button class="add-button" onclick="addItem('otherLiabilities')">Add Other Liability</button>
+
+<div class="total-line">
+Total Liabilities:
+<span id="totalLiabilities">$0.00</span>
+</div>
+
+<div class="totals">
+Net Assets (Fund Balance):
+<span id="netAssets">$0.00</span>
+</div>
+
+<div class="calc-line" id="netAssetsCalc">
+($0.00 – $0.00 = $0.00)
+</div>
+
+</div>
+
+  .add-
+  <div class="section page-break">
+
+<h2>Financial Ratios</h2>
+
+<div class="ratio">
+  <strong>Debt Ratio:</strong>
+  <span id="debtRatio">—</span>
+  <em id="debtRatioText"></em>
+</div>
+
+<div class="ratio">
+  <strong>Current Ratio:</strong>
+  <span id="currentRatio">—</span>
+  <em id="currentRatioText"></em>
+</div>
+
+<div class="ratio">
+  <strong>Liquidity Ratio:</strong>
+  <span id="liquidityRatio">—</span>
+  <em id="liquidityRatioText"></em>
+</div>
+
+<div class="ratio">
+  <strong>Net Cash Flow Ratio:</strong>
+  <span id="netCashFlowRatio">—</span>
+  <em id="netCashFlowRatioText"></em>
+</div>
+
+</div>
 
 <div class="pdf-button">
   <button onclick="window.print()">Print / Download as PDF</button>
   <small>Use your browser’s “Save as PDF” option when printing</small>
 </div>
-<div class="no-print" style="background:#fff3cd; border:1px solid #ffeeba; padding:1rem; border-radius:6px; margin-top:2rem;">
+
+<div
+  class="no-print"
+  style="background:#fff3cd; border:1px solid #ffeeba; padding:1rem; border-radius:6px; margin-top:2rem;"
+>
   <strong>Privacy Disclaimer:</strong>
   <p>
     This tool runs entirely in your web browser. No data you enter is saved, stored, or shared in any way.
@@ -207,6 +324,233 @@ window.onload = calculate;
   </p>
 </div>
 
+<script>
+function formatMoney(value) {
+  return '$' + Number(value || 0).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
+
+function sanitizeMoneyInput(input) {
+  let value = input.value;
+
+  // Remove anything that is not a digit or decimal point
+  value = value.replace(/[^0-9.]/g, '');
+
+  // Allow only one decimal point
+  const parts = value.split('.');
+  if (parts.length > 2) {
+    value = parts[0] + '.' + parts.slice(1).join('');
+  }
+
+  // Limit to two decimal places
+  if (value.includes('.')) {
+    const pieces = value.split('.');
+    const whole = pieces[0];
+    const decimal = pieces[1] || '';
+    value = whole + '.' + decimal.slice(0, 2);
+  }
+
+  input.value = value;
+  calculate();
+}
+
+function addItem(sectionId) {
+  const section = document.getElementById(sectionId);
+  const row = document.createElement("div");
+
+  row.className = "item-row";
+
+  row.innerHTML = `
+    <input type="text" placeholder="Description" />
+    <input
+      type="text"
+      class="money-input"
+      inputmode="decimal"
+      placeholder="0.00"
+      oninput="sanitizeMoneyInput(this)"
+    />
+    <button onclick="this.parentElement.remove(); calculate()">✕</button>
+  `;
+
+  section.appendChild(row);
+}
+
+function sum(sectionId) {
+  const section = document.getElementById(sectionId);
+
+  if (!section) {
+    return 0;
+  }
+
+  return [...section.querySelectorAll(".money-input")]
+    .reduce((total, input) => total + parseFloat(input.value || 0), 0);
+}
+
+function updateText(id, value) {
+  const element = document.getElementById(id);
+
+  if (element) {
+    element.textContent = value;
+  }
+}
+
+function updateName() {
+  const name = document.getElementById('nameInput').value.trim();
+  document.title = name
+    ? `School Financial Statements for ${name}`
+    : 'School Financial Statements';
+}
+
+function calculate() {
+  // Cash Flow Statement - Inflows
+  const tuitionFeesInflows = sum('tuitionFeesInflows');
+  const grantsDonationsInflows = sum('grantsDonationsInflows');
+  const otherIncomeInflows = sum('otherIncomeInflows');
+
+  const totalInflows =
+    tuitionFeesInflows +
+    grantsDonationsInflows +
+    otherIncomeInflows;
+
+  // Cash Flow Statement - Outflows
+  const salariesBenefitsOutflows = sum('salariesBenefitsOutflows');
+  const operationalExpensesOutflows = sum('operationalExpensesOutflows');
+  const programsActivitiesOutflows = sum('programsActivitiesOutflows');
+  const facilityCapitalOutflows = sum('facilityCapitalOutflows');
+  const miscellaneousOutflows = sum('miscellaneousOutflows');
+
+  const totalOutflows =
+    salariesBenefitsOutflows +
+    operationalExpensesOutflows +
+    programsActivitiesOutflows +
+    facilityCapitalOutflows +
+    miscellaneousOutflows;
+
+  const netCashFlow = totalInflows - totalOutflows;
+
+  // Balance Sheet - Assets
+  const cashAssets = sum('cashAssets');
+  const receivablesAssets = sum('receivablesAssets');
+  const prepaidAssets = sum('prepaidAssets');
+  const propertyEquipmentAssets = sum('propertyEquipmentAssets');
+  const otherAssets = sum('otherAssets');
+
+  const totalAssets =
+    cashAssets +
+    receivablesAssets +
+    prepaidAssets +
+    propertyEquipmentAssets +
+    otherAssets;
+
+  // Balance Sheet - Liabilities
+  const accountsPayableLiabilities = sum('accountsPayableLiabilities');
+  const payrollBenefitsLiabilities = sum('payrollBenefitsLiabilities');
+  const deferredRevenueLiabilities = sum('deferredRevenueLiabilities');
+  const debtLiabilities = sum('debtLiabilities');
+  const otherLiabilities = sum('otherLiabilities');
+
+  const totalLiabilities =
+    accountsPayableLiabilities +
+    payrollBenefitsLiabilities +
+    deferredRevenueLiabilities +
+    debtLiabilities +
+    otherLiabilities;
+
+  const netAssets = totalAssets - totalLiabilities;
+
+  // Current assets and current liabilities for ratios
+  const currentAssets =
+    cashAssets +
+    receivablesAssets +
+    prepaidAssets;
+
+  const currentLiabilities =
+    accountsPayableLiabilities +
+    payrollBenefitsLiabilities +
+    deferredRevenueLiabilities;
+
+  // Ratios
+  const debtRatio =
+    totalAssets > 0
+      ? (totalLiabilities / totalAssets) * 100
+      : 0;
+
+  const currentRatio =
+    currentLiabilities > 0
+      ? currentAssets / currentLiabilities
+      : 0;
+
+  const liquidityRatio =
+    totalOutflows > 0
+      ? currentAssets / totalOutflows
+      : 0;
+
+  const netCashFlowRatio =
+    totalInflows > 0
+      ? (netCashFlow / totalInflows) * 100
+      : 0;
+
+  // Cash Flow subtotals
+  updateText('tuitionFeesInflowsSubtotal', formatMoney(tuitionFeesInflows));
+  updateText('grantsDonationsInflowsSubtotal', formatMoney(grantsDonationsInflows));
+  updateText('otherIncomeInflowsSubtotal', formatMoney(otherIncomeInflows));
+
+  updateText('salariesBenefitsOutflowsSubtotal', formatMoney(salariesBenefitsOutflows));
+  updateText('operationalExpensesOutflowsSubtotal', formatMoney(operationalExpensesOutflows));
+  updateText('programsActivitiesOutflowsSubtotal', formatMoney(programsActivitiesOutflows));
+  updateText('facilityCapitalOutflowsSubtotal', formatMoney(facilityCapitalOutflows));
+  updateText('miscellaneousOutflowsSubtotal', formatMoney(miscellaneousOutflows));
+
+  // Cash Flow totals
+  updateText('totalInflows', formatMoney(totalInflows));
+  updateText('totalOutflows', formatMoney(totalOutflows));
+  updateText('netCashFlow', formatMoney(netCashFlow));
+  updateText(
+    'netCashCalc',
+    `(${formatMoney(totalInflows)} – ${formatMoney(totalOutflows)} = ${formatMoney(netCashFlow)})`
+  );
+
+  // Balance Sheet totals
+  updateText('totalAssets', formatMoney(totalAssets));
+  updateText('totalLiabilities', formatMoney(totalLiabilities));
+  updateText('netAssets', formatMoney(netAssets));
+  updateText(
+    'netAssetsCalc',
+    `(${formatMoney(totalAssets)} – ${formatMoney(totalLiabilities)} = ${formatMoney(netAssets)})`
+  );
+
+  // Ratios
+  updateText('debtRatio', debtRatio.toFixed(1) + '%');
+  updateText('currentRatio', currentRatio.toFixed(2));
+  updateText('liquidityRatio', liquidityRatio.toFixed(2));
+  updateText('netCashFlowRatio', netCashFlowRatio.toFixed(1) + '%');
+
+  updateText(
+    'debtRatioText',
+    `About ${debtRatio.toFixed(1)}% of the organization’s assets are financed by liabilities.`
+  );
+
+  updateText(
+    'currentRatioText',
+    `The organization has ${formatMoney(currentRatio)} in current assets for every $1.00 of current liabilities.`
+  );
+
+  updateText(
+    'liquidityRatioText',
+    `The organization can cover about ${liquidityRatio.toFixed(2)} periods of outflows with its current assets, assuming outflows stay consistent.`
+  );
+
+  updateText(
+    'netCashFlowRatioText',
+    `The organization’s net cash flow is ${netCashFlowRatio.toFixed(1)}% of total inflows.`
+  );
+}
+
+document.addEventListener("input", calculate);
+window.onload = calculate;
+</script>
 
 </body>
 </html>
