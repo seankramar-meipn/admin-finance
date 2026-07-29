@@ -283,14 +283,15 @@ document.getElementById('operatingReserve').textContent =
 document.getElementById('operatingMargin').textContent =
   operatingMargin.toFixed(1) + '%';
 document.getElementById('currentRatioText').textContent =
-  `The organization has $${currentRatio.toFixed(2)} in current assets for every $1.00 of current liabilities. A ratio above 1.0 generally indicates the ability to meet short-term obligations, while many organizations target a range of 1.5–3.0 for added financial flexibility.`;
+  `Can we comfortably pay our near-term obligations?`;
+
 document.getElementById('operatingReserveText').textContent =
-  `The organization has operating reserves sufficient to cover approximately ${operatingReserve.toFixed(1)} months of annual operating expenses. Many nonprofits target 3–6 months of reserves, while 6–12 months is generally considered a strong financial position.`;
+  `${operatingReserve.toFixed(1)} months of operating expenses are covered by existing reserves.`;
+
 document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
-    ? `The organization generated an operating surplus equal to ${operatingMargin.toFixed(1)}% of revenue during the fiscal year. Many healthy nonprofit organizations aim for annual operating margins between 2% and 5%.`
-    : `The organization generated an operating deficit equal to ${Math.abs(operatingMargin).toFixed(1)}% of revenue during the fiscal year. Persistent operating deficits may reduce reserves and affect long-term financial sustainability.`;
-}
+    ? `Operations generated a ${operatingMargin.toFixed(1)}% surplus during the fiscal year.`
+    : `Operations generated a ${Math.abs(operatingMargin).toFixed(1)}% deficit during the fiscal year.`;
 document.addEventListener("input", calculate);
 window.onload = calculate;
 </script>
