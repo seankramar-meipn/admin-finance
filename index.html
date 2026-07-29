@@ -312,9 +312,6 @@ document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
     ? `The organization generated an operating surplus equal to ${operatingMargin.toFixed(1)}% of revenue during the fiscal year. Many healthy nonprofit organizations aim for annual operating margins between 2% and 5%.`
     : `The organization generated an operating deficit equal to ${Math.abs(operatingMargin).toFixed(1)}% of revenue during the fiscal year. Persistent operating deficits may reduce reserves and affect long-term financial sustainability.`;
-<p style="font-size:0.8em;color:#666;margin-top:15px;">
-Healthy ranges are general nonprofit finance benchmarks and may vary based on an organization's size, mission, debt structure, and revenue volatility.
-</p>
 }
 document.addEventListener("input", calculate);
 window.onload = calculate;
