@@ -161,7 +161,7 @@
 <div class="section page-break">
  <h2>Financial Ratios</h2>
 <div class="ratio">
-  <strong>Operating Reserve Ratio:</strong>
+  <strong>Operating Reserve:</strong>
   <span id="reserveRatio">—</span>
   <em id="reserveRatioText"></em>
 </div>
@@ -171,7 +171,7 @@
   <em id="currentRatioText"></em>
 </div>
 <div class="ratio">
-  <strong>Months Cash on Hand:</strong>
+  <strong>Cash on Hand:</strong>
   <span id="monthsCashOnHand">—</span>
   <em id="monthsCashOnHandText"></em>
 </div>
@@ -242,7 +242,7 @@ function calculate() {
   const netAssets = totalAssets - totalLiabilities;
 const reserveRatio =
   totalOutflows > 0
-    ? netAssets / totalOutflows
+    ? (netAssets / totalOutflows) * 12
     : 0;
 const currentRatio =
   currentLiabilities > 0
@@ -283,7 +283,7 @@ const operatingMargin =
   document.getElementById('totalAssets').textContent = formatMoney(totalAssets);
   document.getElementById('totalLiabilities').textContent = formatMoney(totalLiabilities);
   document.getElementById('reserveRatio').textContent =
-  reserveRatio.toFixed(2);
+  reserveRatio.toFixed(1) + ' months';
 document.getElementById('currentRatio').textContent =
   currentRatio.toFixed(2);
 document.getElementById('monthsCashOnHand').textContent =
@@ -291,7 +291,7 @@ document.getElementById('monthsCashOnHand').textContent =
 document.getElementById('operatingMargin').textContent =
   operatingMargin.toFixed(1) + '%';
 document.getElementById('reserveRatioText').textContent =
-  `The organization has reserves equal to approximately ${reserveRatio.toFixed(2)} years of annual operating expenses. Healthy nonprofits often target operating reserves equal to 3–6 months of expenses (0.25–0.50 years), while 6–12 months (0.50–1.00 years) is generally considered a strong financial position.`;
+  `The organization has operating reserves sufficient to cover approximately ${operatingReserve.toFixed(1)} months of annual operating expenses. Many nonprofits target 3–6 months of reserves, while 6–12 months is generally considered a strong financial position.`;
 document.getElementById('currentRatioText').textContent =
   `The organization has $${currentRatio.toFixed(2)} in current assets for every $1.00 of current liabilities. A ratio above 1.0 generally indicates the ability to meet short-term obligations, while many organizations target a range of 1.5–3.0 for added financial flexibility.`;
 document.getElementById('monthsCashOnHandText').textContent =
