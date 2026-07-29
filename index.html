@@ -241,7 +241,7 @@ const currentRatio =
     : 0;
 const operatingReserve =
   totalOutflows > 0
-    ? (netAssets / totalOutflows) * 12
+    ? (currentAssets / totalOutflows) * 12
     : 0;
 const operatingMargin =
   inflows > 0
@@ -282,7 +282,7 @@ document.getElementById('operatingMargin').textContent =
 document.getElementById('currentRatioText').textContent =
   `Can we comfortably pay our near-term obligations? Independent schools typically target a current ratio between 1.5 and 3.0, with higher ratios providing a stronger cushion against unexpected expenses.`;
 document.getElementById('operatingReserveText').textContent =
-  `${operatingReserve.toFixed(1)} months of operating expenses are covered by existing reserves. Many independent schools aim to maintain 3–6 months of operating reserves, with larger reserves providing greater flexibility during economic or enrollment challenges.`;
+  `${operatingReserve.toFixed(1)} months of operating expenses could be supported by current assets if revenue were disrupted. Many independent schools aim to maintain resources equivalent to 3–6 months of operating expenses.`;
 document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
     ? `Operations generated a ${operatingMargin.toFixed(1)}% surplus during the fiscal year. Healthy independent schools often target an operating margin of 2–5% or higher to support reinvestment and long-term sustainability.`
