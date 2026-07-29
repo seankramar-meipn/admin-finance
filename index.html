@@ -280,13 +280,13 @@ document.getElementById('operatingReserve').textContent =
 document.getElementById('operatingMargin').textContent =
   operatingMargin.toFixed(1) + '%';
 document.getElementById('currentRatioText').textContent =
-  `Can we comfortably pay our near-term obligations?`;
+  `Can we comfortably pay our near-term obligations? Independent schools typically target a current ratio between 1.5 and 3.0, with higher ratios providing a stronger cushion against unexpected expenses.`;
 document.getElementById('operatingReserveText').textContent =
-  `${operatingReserve.toFixed(1)} months of operating expenses are covered by existing reserves.`;
+  `${operatingReserve.toFixed(1)} months of operating expenses are covered by existing reserves. Many independent schools aim to maintain 3–6 months of operating reserves, with larger reserves providing greater flexibility during economic or enrollment challenges.`;
 document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
-    ? `Operations generated a ${operatingMargin.toFixed(1)}% surplus during the fiscal year.`
-    : `Operations generated a ${Math.abs(operatingMargin).toFixed(1)}% deficit during the fiscal year.`;
+    ? `Operations generated a ${operatingMargin.toFixed(1)}% surplus during the fiscal year. Healthy independent schools often target an operating margin of 2–5% or higher to support reinvestment and long-term sustainability.`
+    : `Operations generated a ${Math.abs(operatingMargin).toFixed(1)}% deficit during the fiscal year. Healthy independent schools often target an operating margin of 2–5% or higher to support reinvestment and long-term sustainability.`;
 }
 document.addEventListener("input", calculate);
 window.onload = calculate;
