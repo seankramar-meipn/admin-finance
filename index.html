@@ -159,22 +159,20 @@
   <div class="calc-line" id="netAssetsCalc">($0 – $0 = $0)</div>
 </div>
 <div class="section page-break">
- <h2>Financial Ratios</h2>
-<div class="ratio">
-  <strong>Operating Reserve:</strong>
-  <span id="operatingReserve">—</span>
-  <em id="operatingReserveText"></em>
-</div>
+<h2>Financial Health Indicators</h2>
+
 <div class="ratio">
   <strong>Current Ratio:</strong>
   <span id="currentRatio">—</span>
   <em id="currentRatioText"></em>
 </div>
+
 <div class="ratio">
-  <strong>Cash on Hand:</strong>
-  <span id="monthsCashOnHand">—</span>
-  <em id="monthsCashOnHandText"></em>
+  <strong>Operating Reserve:</strong>
+  <span id="operatingReserve">—</span>
+  <em id="operatingReserveText"></em>
 </div>
+
 <div class="ratio">
   <strong>Operating Margin:</strong>
   <span id="operatingMargin">—</span>
@@ -240,17 +238,13 @@ function calculate() {
   const totalAssets = currentAssets + propertyEquipment + otherAssets;
   const totalLiabilities = currentLiabilities + longTermDebt + otherLiabilities;
   const netAssets = totalAssets - totalLiabilities;
-const operatingReserve =
-  totalOutflows > 0
-    ? (netAssets / totalOutflows) * 12
-    : 0;
 const currentRatio =
   currentLiabilities > 0
     ? currentAssets / currentLiabilities
     : 0;
-const monthsCashOnHand =
+const operatingReserve =
   totalOutflows > 0
-    ? cashEquivalents / (totalOutflows / 12)
+    ? (netAssets / totalOutflows) * 12
     : 0;
 const operatingMargin =
   inflows > 0
@@ -282,20 +276,16 @@ const operatingMargin =
   document.getElementById('totalOutflows').textContent = formatMoney(totalOutflows);
   document.getElementById('totalAssets').textContent = formatMoney(totalAssets);
   document.getElementById('totalLiabilities').textContent = formatMoney(totalLiabilities);
-  document.getElementById('operatingReserve').textContent =
-  operatingReserve.toFixed(1) + ' months';
 document.getElementById('currentRatio').textContent =
   currentRatio.toFixed(2);
-document.getElementById('monthsCashOnHand').textContent =
-  monthsCashOnHand.toFixed(1) + ' months';
+document.getElementById('operatingReserve').textContent =
+  operatingReserve.toFixed(1) + ' months';
 document.getElementById('operatingMargin').textContent =
   operatingMargin.toFixed(1) + '%';
-document.getElementById('operatingReserveText').textContent =
-  `The organization has operating reserves sufficient to cover approximately ${operatingReserve.toFixed(1)} months of annual operating expenses. Many nonprofits target 3–6 months of reserves, while 6–12 months is generally considered a strong financial position.`;
 document.getElementById('currentRatioText').textContent =
   `The organization has $${currentRatio.toFixed(2)} in current assets for every $1.00 of current liabilities. A ratio above 1.0 generally indicates the ability to meet short-term obligations, while many organizations target a range of 1.5–3.0 for added financial flexibility.`;
-document.getElementById('monthsCashOnHandText').textContent =
-  `The organization could operate for approximately ${monthsCashOnHand.toFixed(1)} months using existing cash reserves if no additional revenue were received. Many nonprofits target at least 3 months of cash reserves, while 6–12 months is often considered a strong position.`;
+document.getElementById('operatingReserveText').textContent =
+  `The organization has operating reserves sufficient to cover approximately ${operatingReserve.toFixed(1)} months of annual operating expenses. Many nonprofits target 3–6 months of reserves, while 6–12 months is generally considered a strong financial position.`;
 document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
     ? `The organization generated an operating surplus equal to ${operatingMargin.toFixed(1)}% of revenue during the fiscal year. Many healthy nonprofit organizations aim for annual operating margins between 2% and 5%.`
