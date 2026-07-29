@@ -65,9 +65,9 @@
 <h1>Building School Financial Statements</h1>
 <div id="subtitle">for <input id="nameInput" placeholder="Enter your organization" oninput="updateName()" /></div>
 <div class="section">
-  <h2>Cash Flow Statement</h2>
-  <div class="description">Shows the organization’s cash inflows and outflows over a period of time to help assess short-term financial sustainability.</div>
-  <div class="date-row"><strong>For the period:</strong> <input type="date" id="startDate" /> to <input type="date" id="endDate" /></div>
+  <h2>Statement of Activities (Fiscal Year)</h2>
+  <div class="description">The Statement of Activities summarizes the organization's revenues and expenses for a fiscal year. It shows whether the organization generated an operating surplus or deficit and helps evaluate overall financial sustainability.</div>
+  <div class="date-row"><strong>Fiscal Year:</strong> <input type="date" id="startDate" /> to <input type="date" id="endDate" /></div>
   <h3>Cash Inflows</h3>
   <h4>Tuition and Fees</h4>
   <div id="tuitionFees"></div>
@@ -108,8 +108,8 @@
   <div class="calc-line" id="netCashCalc">($0 – $0 = $0)</div>
 </div>
 <div class="section page-break">
-  <h2>Balance Sheet</h2>
-  <div class="description">A snapshot of the organization’s assets, liabilities, and net assets at a specific point in time.</div>
+  <h2>Statement of Financial Position</h2>
+  <div class="description">The Statement of Financial Position provides a snapshot of what the organization owns (assets), what it owes (liabilities), and the resources available to support its mission (net assets) as of a specific date.</div>
   <div class="date-row"><strong>As of:</strong> <input type="date" id="balanceDate" /></div>
   <h3>Assets</h3>
   <h4>Cash and Cash Equivalents</h4>
@@ -160,10 +160,10 @@
 </div>
 <div class="section page-break">
   <h2>Financial Ratios</h2>
-  <div class="ratio"><strong>Debt Ratio:</strong> <span id="debtRatio">—</span><em id="debtRatioText"></em></div>
+  <div class="ratio"><strong>Operating Reserve Ratio:</strong> <span id="debtRatio">—</span><em id="debtRatioText"></em></div>
   <div class="ratio"><strong>Current Ratio:</strong> <span id="currentRatio">—</span><em id="currentRatioText"></em></div>
-  <div class="ratio"><strong>Liquidity Ratio:</strong> <span id="liquidityRatio">—</span><em id="liquidityRatioText"></em></div>
-  <div class="ratio"><strong>Net Cash Flow Ratio:</strong> <span id="netCashFlowRatio">—</span><em id="netCashFlowRatioText"></em></div>
+  <div class="ratio"><strong>Months Cash on Hand:</strong> <span id="liquidityRatio">—</span><em id="liquidityRatioText"></em></div>
+  <div class="ratio"><strong>Operating Margin:</strong> <span id="netCashFlowRatio">—</span><em id="netCashFlowRatioText"></em></div>
 </div>
 <script>
 function formatMoney(value) {
