@@ -258,10 +258,22 @@ function calculate() {
   document.getElementById('currentRatio').textContent = currentRatio.toFixed(2);
   document.getElementById('liquidityRatio').textContent = liquidity.toFixed(2);
   document.getElementById('netCashFlowRatio').textContent = netCashFlowRatio.toFixed(1) + '%';
-  document.getElementById('debtRatioText').textContent = `About ${debtRatio.toFixed(1)}% of the organization’s assets are financed by liabilities.`;
-  document.getElementById('currentRatioText').textContent = `The organization has $${currentRatio.toFixed(2)} in current assets for every $1.00 of current liabilities.`;
-  document.getElementById('liquidityRatioText').textContent = `The organization can cover about ${liquidity.toFixed(2)} periods of outflows with its current assets, assuming outflows stay consistent.`;
-  document.getElementById('netCashFlowRatioText').textContent = `The organization’s net cash flow is ${netCashFlowRatio.toFixed(1)}% of total inflows.`;
+document.getElementById('reserveRatioText').textContent =
+  `The organization has reserves equal to approximately ${reserveRatio.toFixed(2)} years of annual operating expenses. Healthy nonprofits often target operating reserves equal to 3–6 months of expenses (0.25–0.50 years), while 6–12 months (0.50–1.00 years) is generally considered a strong financial position.`;
+
+document.getElementById('currentRatioText').textContent =
+  `The organization has $${currentRatio.toFixed(2)} in current assets for every $1.00 of current liabilities. A ratio above 1.0 generally indicates the ability to meet short-term obligations, while many organizations target a range of 1.5–3.0 for added financial flexibility.`;
+
+document.getElementById('monthsCashOnHandText').textContent =
+  `The organization could operate for approximately ${monthsCashOnHand.toFixed(1)} months using existing cash reserves if no additional revenue were received. Many nonprofits target at least 3 months of cash reserves, while 6–12 months is often considered a strong position.`;
+
+document.getElementById('operatingMarginText').textContent =
+  operatingMargin >= 0
+    ? `The organization generated an operating surplus equal to ${operatingMargin.toFixed(1)}% of revenue during the fiscal year. Many healthy nonprofit organizations aim for annual operating margins between 2% and 5% to support future investments and maintain financial stability.`
+    : `The organization generated an operating deficit equal to ${Math.abs(operatingMargin).toFixed(1)}% of revenue during the fiscal year. Persistent operating deficits may reduce reserves and affect long-term financial sustainability.`;
+<p style="font-size:0.8em;color:#666;margin-top:15px;">
+Healthy ranges are general nonprofit finance benchmarks and may vary based on an organization's size, mission, debt structure, and revenue volatility.
+</p>
 }
 document.addEventListener("input", calculate);
 window.onload = calculate;
