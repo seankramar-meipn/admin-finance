@@ -253,9 +253,10 @@ function calculate() {
   const totalAssets = currentAssets + propertyEquipment + otherAssets;
   const totalLiabilities = currentLiabilities + longTermDebt + otherLiabilities;
   const netAssets = totalAssets - totalLiabilities;
+  const liquidAssets = cashEquivalents + accountsReceivable;
 const operatingReserve =
   totalOutflows > 0
-    ? (currentAssets / totalOutflows) * 12
+    ? (liquidAssets / totalOutflows) * 12
     : 0;
 const operatingMargin =
   inflows > 0
@@ -298,7 +299,7 @@ document.getElementById('operatingMargin').textContent =
 document.getElementById('debtRatio').textContent =
   debtRatio.toFixed(1) + '%';
 document.getElementById('operatingReserveText').textContent =
-  `${operatingReserve.toFixed(1)} months of operating expenses could be supported by current assets if revenue were disrupted. Many independent schools aim to maintain resources equivalent to 3–6 months of operating expenses.`;
+  `${operatingReserve.toFixed(1)} months of operating expenses could be supported by liquid assets if revenue were disrupted. Many independent schools aim to maintain resources equivalent to 3–6 months of operating expenses.`;
 document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
     ? `Operations generated a ${operatingMargin.toFixed(1)}% surplus during the fiscal year. Healthy independent schools often target an operating margin of 2–5% or higher to support reinvestment and long-term sustainability.`
