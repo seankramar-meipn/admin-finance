@@ -159,11 +159,30 @@
   <div class="calc-line" id="netAssetsCalc">($0 – $0 = $0)</div>
 </div>
 <div class="section page-break">
-  <h2>Financial Ratios</h2>
-  <div class="ratio"><strong>Operating Reserve Ratio:</strong> <span id="debtRatio">—</span><em id="debtRatioText"></em></div>
-  <div class="ratio"><strong>Current Ratio:</strong> <span id="currentRatio">—</span><em id="currentRatioText"></em></div>
-  <div class="ratio"><strong>Months Cash on Hand:</strong> <span id="liquidityRatio">—</span><em id="liquidityRatioText"></em></div>
-  <div class="ratio"><strong>Operating Margin:</strong> <span id="netCashFlowRatio">—</span><em id="netCashFlowRatioText"></em></div>
+ <h2>Financial Ratios</h2>
+
+<div class="ratio">
+  <strong>Operating Reserve Ratio:</strong>
+  <span id="reserveRatio">—</span>
+  <em id="reserveRatioText"></em>
+</div>
+
+<div class="ratio">
+  <strong>Current Ratio:</strong>
+  <span id="currentRatio">—</span>
+  <em id="currentRatioText"></em>
+</div>
+
+<div class="ratio">
+  <strong>Months Cash on Hand:</strong>
+  <span id="monthsCashOnHand">—</span>
+  <em id="monthsCashOnHandText"></em>
+</div>
+
+<div class="ratio">
+  <strong>Operating Margin:</strong>
+  <span id="operatingMargin">—</span>
+  <em id="operatingMarginText"></em>
 </div>
 <script>
 function formatMoney(value) {
@@ -224,10 +243,25 @@ function calculate() {
   const totalAssets = currentAssets + propertyEquipment + otherAssets;
   const totalLiabilities = currentLiabilities + longTermDebt + otherLiabilities;
   const netAssets = totalAssets - totalLiabilities;
-  const liquidity = totalOutflows > 0 ? (currentAssets / totalOutflows) : 0;
-  const debtRatio = totalAssets > 0 ? (totalLiabilities / totalAssets) * 100 : 0;
-  const currentRatio = currentLiabilities > 0 ? currentAssets / currentLiabilities : 0;
-  const netCashFlowRatio = inflows > 0 ? (netCash / inflows) * 100 : 0;
+const reserveRatio =
+  totalOutflows > 0
+    ? netAssets / totalOutflows
+    : 0;
+
+const currentRatio =
+  currentLiabilities > 0
+    ? currentAssets / currentLiabilities
+    : 0;
+
+const monthsCashOnHand =
+  totalOutflows > 0
+    ? cashEquivalents / (totalOutflows / 12)
+    : 0;
+
+const operatingMargin =
+  inflows > 0
+    ? (netCash / inflows) * 100
+    : 0;
   document.getElementById('tuitionFeesSubtotal').textContent = formatMoney(tuitionFees);
   document.getElementById('grantsDonationsSubtotal').textContent = formatMoney(grantsDonations);
   document.getElementById('otherIncomeSubtotal').textContent = formatMoney(otherIncome);
@@ -254,10 +288,17 @@ function calculate() {
   document.getElementById('totalOutflows').textContent = formatMoney(totalOutflows);
   document.getElementById('totalAssets').textContent = formatMoney(totalAssets);
   document.getElementById('totalLiabilities').textContent = formatMoney(totalLiabilities);
-  document.getElementById('debtRatio').textContent = debtRatio.toFixed(1) + '%';
-  document.getElementById('currentRatio').textContent = currentRatio.toFixed(2);
-  document.getElementById('liquidityRatio').textContent = liquidity.toFixed(2);
-  document.getElementById('netCashFlowRatio').textContent = netCashFlowRatio.toFixed(1) + '%';
+  document.getElementById('reserveRatio').textContent =
+  reserveRatio.toFixed(2);
+
+document.getElementById('currentRatio').textContent =
+  currentRatio.toFixed(2);
+
+document.getElementById('monthsCashOnHand').textContent =
+  monthsCashOnHand.toFixed(1);
+
+document.getElementById('operatingMargin').textContent =
+  operatingMargin.toFixed(1) + '%';
 document.getElementById('reserveRatioText').textContent =
   `The organization has reserves equal to approximately ${reserveRatio.toFixed(2)} years of annual operating expenses. Healthy nonprofits often target operating reserves equal to 3–6 months of expenses (0.25–0.50 years), while 6–12 months (0.50–1.00 years) is generally considered a strong financial position.`;
 
@@ -269,7 +310,7 @@ document.getElementById('monthsCashOnHandText').textContent =
 
 document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
-    ? `The organization generated an operating surplus equal to ${operatingMargin.toFixed(1)}% of revenue during the fiscal year. Many healthy nonprofit organizations aim for annual operating margins between 2% and 5% to support future investments and maintain financial stability.`
+    ? `The organization generated an operating surplus equal to ${operatingMargin.toFixed(1)}% of revenue during the fiscal year. Many healthy nonprofit organizations aim for annual operating margins between 2% and 5%.`
     : `The organization generated an operating deficit equal to ${Math.abs(operatingMargin).toFixed(1)}% of revenue during the fiscal year. Persistent operating deficits may reduce reserves and affect long-term financial sustainability.`;
 <p style="font-size:0.8em;color:#666;margin-top:15px;">
 Healthy ranges are general nonprofit finance benchmarks and may vary based on an organization's size, mission, debt structure, and revenue volatility.
