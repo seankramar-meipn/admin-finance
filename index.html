@@ -287,6 +287,7 @@ document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
     ? `Operations generated a ${operatingMargin.toFixed(1)}% surplus during the fiscal year.`
     : `Operations generated a ${Math.abs(operatingMargin).toFixed(1)}% deficit during the fiscal year.`;
+}
 document.addEventListener("input", calculate);
 window.onload = calculate;
 </script>
