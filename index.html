@@ -161,11 +161,6 @@
 <div class="section page-break">
 <h2>Financial Health Indicators</h2>
 <div class="ratio">
-  <strong>Current Ratio:</strong>
-  <span id="currentRatio">—</span>
-  <em id="currentRatioText"></em>
-</div>
-<div class="ratio">
   <strong>Operating Reserve:</strong>
   <span id="operatingReserve">—</span>
   <em id="operatingReserveText"></em>
@@ -174,6 +169,11 @@
   <strong>Operating Margin:</strong>
   <span id="operatingMargin">—</span>
   <em id="operatingMarginText"></em>
+</div>
+<div class="ratio">
+  <strong>Debt Ratio:</strong>
+  <span id="debtRatio">—</span>
+  <em id="debtRatioText"></em>
 </div>
   </div>
 <script>
@@ -235,10 +235,6 @@ function calculate() {
   const totalAssets = currentAssets + propertyEquipment + otherAssets;
   const totalLiabilities = currentLiabilities + longTermDebt + otherLiabilities;
   const netAssets = totalAssets - totalLiabilities;
-const currentRatio =
-  currentLiabilities > 0
-    ? currentAssets / currentLiabilities
-    : 0;
 const operatingReserve =
   totalOutflows > 0
     ? (currentAssets / totalOutflows) * 12
@@ -246,6 +242,10 @@ const operatingReserve =
 const operatingMargin =
   inflows > 0
     ? (netCash / inflows) * 100
+    : 0;
+const debtRatio =
+  totalAssets > 0
+    ? (totalLiabilities / totalAssets) * 100
     : 0;
   document.getElementById('tuitionFeesSubtotal').textContent = formatMoney(tuitionFees);
   document.getElementById('grantsDonationsSubtotal').textContent = formatMoney(grantsDonations);
@@ -273,20 +273,20 @@ const operatingMargin =
   document.getElementById('totalOutflows').textContent = formatMoney(totalOutflows);
   document.getElementById('totalAssets').textContent = formatMoney(totalAssets);
   document.getElementById('totalLiabilities').textContent = formatMoney(totalLiabilities);
-document.getElementById('currentRatio').textContent =
-  currentRatio.toFixed(2);
 document.getElementById('operatingReserve').textContent =
   operatingReserve.toFixed(1) + ' months';
 document.getElementById('operatingMargin').textContent =
   operatingMargin.toFixed(1) + '%';
-document.getElementById('currentRatioText').textContent =
-  `Can we comfortably pay our near-term obligations? Independent schools typically target a current ratio between 1.5 and 3.0, with higher ratios providing a stronger cushion against unexpected expenses.`;
+document.getElementById('debtRatio').textContent =
+  debtRatio.toFixed(1) + '%';
 document.getElementById('operatingReserveText').textContent =
   `${operatingReserve.toFixed(1)} months of operating expenses could be supported by current assets if revenue were disrupted. Many independent schools aim to maintain resources equivalent to 3–6 months of operating expenses.`;
 document.getElementById('operatingMarginText').textContent =
   operatingMargin >= 0
     ? `Operations generated a ${operatingMargin.toFixed(1)}% surplus during the fiscal year. Healthy independent schools often target an operating margin of 2–5% or higher to support reinvestment and long-term sustainability.`
     : `Operations generated a ${Math.abs(operatingMargin).toFixed(1)}% deficit during the fiscal year. Healthy independent schools often target an operating margin of 2–5% or higher to support reinvestment and long-term sustainability.`;
+document.getElementById('debtRatioText').textContent =
+  `About ${debtRatio.toFixed(1)}% of the organization's assets are financed by liabilities. Many healthy independent schools maintain debt ratios below 50%, though appropriate levels vary based on facilities, growth plans, and access to capital.`;
 }
 document.addEventListener("input", calculate);
 window.onload = calculate;
